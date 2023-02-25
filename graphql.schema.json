@@ -18,7 +18,7 @@
       },
       {
         "kind": "SCALAR",
-        "name": "Date",
+        "name": "DateTime",
         "description": null,
         "fields": null,
         "inputFields": null,
@@ -50,7 +50,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },
@@ -98,7 +98,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "DateTime",
                 "ofType": null
               }
             },

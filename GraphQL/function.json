@@ -14,5 +14,5 @@
       "name": "$return"
     }
   ],
-  "scriptFile": "../dist/ApolloServerFunc/index.js"
+  "scriptFile": "../dist/GraphQL/index.js"
 }

@@ -1,10 +1,10 @@
 export const typeDefs = `#graphql
-  scalar Date
+  scalar DateTime
 
   type Nft {  
     id: ID!
-    createdAt: Date!
-    updatedAt: Date!
+    createdAt: DateTime!
+    updatedAt: DateTime!
     name: String!
   }
 
