@@ -11,8 +11,33 @@ datasource db {
 }
 
 model Nft {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String   @unique
+  id              String       @id @default(cuid())
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  name            String       @unique
+  contractAddress String
+  contractType    ContractType
+  tokenId         Int
+  server          Server
+  section         Section
+  openSeaSlug     String?
+  price           Decimal?
+  supply          Int?
+  lastSoldDate    DateTime?
+  lastSoldPrice   Decimal?
+}
+
+enum ContractType {
+  ERC721
+  ERC1155
+}
+
+enum Server {
+  MoneyClicc
+  Degenz
+  RugRadio
+}
+
+enum Section {
+  FakeRekt
 }

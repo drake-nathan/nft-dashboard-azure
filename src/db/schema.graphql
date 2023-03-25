@@ -1,0 +1,38 @@
+scalar DateTime
+
+type Nft {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  contractAddress: String!
+  contractType: ContractType!
+  tokenId: Int!
+  server: Server!
+  section: Section!
+  openSeaSlug: String
+  price: Float
+  supply: Int
+  lastSoldDate: DateTime
+  lastSoldPrice: String
+}
+
+enum ContractType {
+  ERC721
+  ERC1155
+}
+
+enum Server {
+  MoneyClicc
+  Degenz
+  RugRadio
+}
+
+enum Section {
+  FakeRekt
+}
+
+type Query {
+  nft(id: ID!): Nft
+  allNfts: [Nft]
+}

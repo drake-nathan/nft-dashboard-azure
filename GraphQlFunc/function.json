@@ -14,5 +14,5 @@
       "name": "$return"
     }
   ],
-  "scriptFile": "../dist/GraphQL/index.js"
+  "scriptFile": "../dist/GraphQlFunc/index.js"
 }

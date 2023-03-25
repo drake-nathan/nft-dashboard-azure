@@ -1,6 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { DateTimeResolver } from 'graphql-scalars';
-import { type Resolvers } from '../../generated/graphql';
+import type { Resolvers, Nft } from '../../generated/graphql';
 import { typeDefs } from '../graphqlSchema';
 import { prismaClient } from '../prisma';
 
@@ -9,11 +9,14 @@ const resolvers: Resolvers = {
   Query: {
     allNfts: async () => {
       const nfts = await prismaClient.nft.findMany();
-      return nfts;
+      return nfts as Nft[];
     },
     nft: async (_, { id }) => {
       const nft = await prismaClient.nft.findUnique({ where: { id } });
-      return nft;
+      if (!nft) {
+        throw new Error(`NFT not found for id: ${id}`);
+      }
+      return nft as Nft;
     },
   },
 };

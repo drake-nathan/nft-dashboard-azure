@@ -28,11 +28,26 @@ export type Scalars = {
   DateTime: any;
 };
 
+export enum ContractType {
+  Erc721 = 'ERC721',
+  Erc1155 = 'ERC1155',
+}
+
 export type Nft = {
   __typename?: 'Nft';
+  contractAddress: Scalars['String'];
+  contractType: ContractType;
   createdAt: Scalars['DateTime'];
   id: Scalars['ID'];
+  lastSoldDate?: Maybe<Scalars['DateTime']>;
+  lastSoldPrice?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  openSeaSlug?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+  section: Section;
+  server: Server;
+  supply?: Maybe<Scalars['Int']>;
+  tokenId: Scalars['Int'];
   updatedAt: Scalars['DateTime'];
 };
 
@@ -45,6 +60,16 @@ export type Query = {
 export type QueryNftArgs = {
   id: Scalars['ID'];
 };
+
+export enum Section {
+  FakeRekt = 'FakeRekt',
+}
+
+export enum Server {
+  Degenz = 'Degenz',
+  MoneyClicc = 'MoneyClicc',
+  RugRadio = 'RugRadio',
+}
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -154,10 +179,15 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  ContractType: ContractType;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Nft: ResolverTypeWrapper<Nft>;
   Query: ResolverTypeWrapper<{}>;
+  Section: Section;
+  Server: Server;
   String: ResolverTypeWrapper<Scalars['String']>;
 };
 
@@ -165,7 +195,9 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   DateTime: Scalars['DateTime'];
+  Float: Scalars['Float'];
   ID: Scalars['ID'];
+  Int: Scalars['Int'];
   Nft: Nft;
   Query: {};
   String: Scalars['String'];
@@ -180,9 +212,35 @@ export type NftResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Nft'] = ResolversParentTypes['Nft'],
 > = {
+  contractAddress?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  contractType?: Resolver<
+    ResolversTypes['ContractType'],
+    ParentType,
+    ContextType
+  >;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  lastSoldDate?: Resolver<
+    Maybe<ResolversTypes['DateTime']>,
+    ParentType,
+    ContextType
+  >;
+  lastSoldPrice?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  openSeaSlug?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >;
+  price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  section?: Resolver<ResolversTypes['Section'], ParentType, ContextType>;
+  server?: Resolver<ResolversTypes['Server'], ParentType, ContextType>;
+  supply?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  tokenId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
