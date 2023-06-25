@@ -17,9 +17,9 @@ model Nft {
   name            String       @unique
   contractAddress String
   contractType    ContractType
-  tokenId         Int
   server          Server
   section         Section
+  tokenId         Int?
   openSeaSlug     String?
   price           Decimal?
   supply          Int?
@@ -33,11 +33,10 @@ enum ContractType {
 }
 
 enum Server {
-  MoneyClicc
   Degenz
   RugRadio
 }
 
 enum Section {
-  FakeRekt
+  OsfSeason2
 }

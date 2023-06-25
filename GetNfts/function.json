@@ -5,14 +5,14 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "methods": ["get", "post"],
-      "route": "graphql"
+      "methods": ["get"],
+      "route": "nfts/"
     },
     {
       "type": "http",
       "direction": "out",
-      "name": "$return"
+      "name": "res"
     }
   ],
-  "scriptFile": "../dist/GraphQlFunc/index.js"
+  "scriptFile": "../dist/GetNfts/index.js"
 }

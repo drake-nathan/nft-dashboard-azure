@@ -4,9 +4,9 @@
       "name": "myTimer",
       "type": "timerTrigger",
       "direction": "in",
-      "schedule": "0 */5 * * * *",
+      "schedule": "0 0 */1 * * *",
       "runOnStartup": true
     }
   ],
-  "scriptFile": "../dist/FetchListings/index.js"
+  "scriptFile": "../dist/AddNfts/index.js"
 }
