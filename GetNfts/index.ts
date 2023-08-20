@@ -1,9 +1,9 @@
 import type { AzureFunction, Context } from '@azure/functions';
-import { getAllNfts } from '../src/prisma/queries';
+import { prisma } from '../src/prisma';
 
 const GetNfts: AzureFunction = async (context: Context): Promise<void> => {
   try {
-    const nfts = await getAllNfts();
+    const nfts = await prisma.nft.findMany();
 
     context.res = {
       status: 200,

@@ -1,12 +1,18 @@
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-constant-condition */
+import { Prisma } from '@prisma/client';
+import type { Context } from '@azure/functions';
 import { Collection } from '../../src/collections';
-import { fetchAssetName } from '../../src/services/opensea/fetchAsset';
-import type { PreNft } from '..';
+import { fetchAssetDetails } from '../../src/services/opensea/fetchAssetDetails';
+import type { PreNft } from '../types';
 
-export const fetchCollectionNfts = async (
-  collection: Collection,
-): Promise<PreNft[]> => {
+interface Params {
+  context: Context;
+  collection: Collection;
+}
+
+export const fetchCollectionNfts = async ({
+  context,
+  collection,
+}: Params): Promise<PreNft[]> => {
   const { contractAddress, contractType, openSeaSlug, section, server } =
     collection;
 
@@ -16,7 +22,11 @@ export const fetchCollectionNfts = async (
   let i = 0;
   while (true) {
     try {
-      const name = await fetchAssetName(collection.contractAddress, i);
+      // eslint-disable-next-line no-await-in-loop
+      const { name, lastSold } = await fetchAssetDetails(
+        collection.contractAddress,
+        i,
+      );
 
       const nft: PreNft = {
         name,
@@ -28,21 +38,25 @@ export const fetchCollectionNfts = async (
         tokenId: i,
         price: null,
         supply: null,
-        lastSoldDate: null,
-        lastSoldPrice: null,
+        lastSoldDate: lastSold?.date ?? null,
+        lastSoldPrice: new Prisma.Decimal(lastSold?.price ?? 0) || null,
       };
 
       nfts.push(nft);
 
       i += 1;
-    } catch {
+    } catch (error: any) {
       // NOTE: The collection may not be zero indexed
-      if (i === 0) {
+      if (i === 0 && error?.status && error.status === 404) {
         i += 1;
         continue;
-      } else {
+      }
+      // NOTE: If we get a 404, we have reached the end of the collection
+      if (error?.status && error.status === 404) {
         break;
       }
+
+      context.log.error(error);
     }
   }
 

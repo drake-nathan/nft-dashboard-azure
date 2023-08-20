@@ -7,7 +7,10 @@ const Listing = z.object({
   current_price: z.string(),
 });
 
-export const fetchListings = async (address: string, tokenId: number) => {
+export const fetchFloorPrice = async (
+  address: string,
+  tokenId: number,
+): Promise<string> => {
   const chain = 'ethereum';
   const url = `https://api.opensea.io/v2/orders/${chain}/seaport/listings`;
 
@@ -27,10 +30,10 @@ export const fetchListings = async (address: string, tokenId: number) => {
 
   const { data } = await axios.get(url, config);
 
-  const listings = data.orders.map((order: unknown) => {
+  const floorPrices: string[] = data.orders.map((order: unknown) => {
     const { current_price } = Listing.parse(order);
     return formatEther(current_price);
   });
 
-  return listings;
+  return floorPrices[0];
 };

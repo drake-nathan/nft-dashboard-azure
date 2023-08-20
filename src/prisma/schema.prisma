@@ -19,12 +19,12 @@ model Nft {
   contractType    ContractType
   server          Server
   section         Section
-  tokenId         Int?
-  openSeaSlug     String?
-  price           Decimal?
-  supply          Int?
+  tokenId         Int
+  openSeaSlug     String
   lastSoldDate    DateTime?
   lastSoldPrice   Decimal?
+  supply          Int?
+  price           Decimal?
 }
 
 enum ContractType {
@@ -38,5 +38,6 @@ enum Server {
 }
 
 enum Section {
+  OsfSeason1
   OsfSeason2
 }

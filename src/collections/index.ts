@@ -7,6 +7,7 @@ export interface Collection {
   contractType: ContractType;
   server: Server;
   section: Section;
+  tokenIds?: number[];
 }
 
 export const collections: Collection[] = [
@@ -17,5 +18,13 @@ export const collections: Collection[] = [
     contractType: ContractType.ERC1155,
     server: Server.Degenz,
     section: Section.OsfSeason2,
+  },
+  {
+    name: 'RLD Editions Season 1',
+    contractAddress: '0xc23a563a26afff06e945ace77173e1568f288ce5',
+    openSeaSlug: 'osf',
+    contractType: ContractType.ERC1155,
+    server: Server.Degenz,
+    section: Section.OsfSeason1,
   },
 ];

@@ -1,17 +1,18 @@
 import type { AzureFunction, Context } from '@azure/functions';
-import type { Nft } from '@prisma/client';
 import { collections } from '../src/collections';
 import { prisma } from '../src/prisma';
 import { fetchCollectionNfts } from './utils/fetchCollectionNfts';
-
-export type PreNft = Omit<Nft, 'id' | 'createdAt' | 'updatedAt'>;
+import { PreNft } from './types';
 
 const AddNfts: AzureFunction = async (context: Context): Promise<void> => {
+  context.log.info('Checking all collections for new NFTs...');
+
   const allNfts: PreNft[] = [];
 
   try {
     for await (const collection of collections) {
-      const nfts = await fetchCollectionNfts(collection);
+      context.log.info(`Fetching nfts for ${collection.name}...`);
+      const nfts = await fetchCollectionNfts({ context, collection });
       allNfts.push(...nfts);
     }
 
@@ -21,7 +22,7 @@ const AddNfts: AzureFunction = async (context: Context): Promise<void> => {
     });
 
     if (count) {
-      context.log.info(`Added ${count} nfts`);
+      context.log.info(`Added ${count} total nfts.`);
     } else {
       context.log.info('No new nfts added');
     }
